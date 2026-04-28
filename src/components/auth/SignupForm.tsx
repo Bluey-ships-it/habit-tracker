@@ -3,7 +3,7 @@ import { getUsers, saveUsers, saveSession } from "@/src/lib/storage";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
-
+import { signUp } from "@/src/lib/auth";
 export default function SignupForm() {
 	const router = useRouter();
 	const [email, setEmail] = useState("");
@@ -16,27 +16,16 @@ export default function SignupForm() {
 		setError(null);
 		setLoading(true);
 
-		const users = getUsers();
-		const duplicate = users.find((u: { email: string }) => u.email === email);
+		const result = signUp(email, password);
 
-		if (duplicate) {
-			setError("User already exists");
+		if (!result.success) {
+			setError(result.error);
 			setLoading(false);
 			return;
 		}
 
-		const newUser = {
-			id: uuidv4(),
-			email,
-			password,
-			createdAt: new Date().toISOString(),
-		};
-
-		saveUsers([...users, newUser]);
-		saveSession({ userId: newUser.id, email: newUser.email });
 		router.push("/dashboard");
 	}
-
 	return (
 		<div className="flex min-h-screen items-center justify-center bg-black px-4">
 			<div className="w-full max-w-sm">

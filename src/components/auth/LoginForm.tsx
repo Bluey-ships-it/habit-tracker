@@ -1,8 +1,8 @@
 "use client";
-
+import { getUsers, saveSession } from "@/src/lib/storage";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { logIn } from "@/src/lib/auth";
 export default function LoginForm() {
 	const router = useRouter();
 	const [email, setEmail] = useState("");
@@ -10,30 +10,21 @@ export default function LoginForm() {
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
 
-	function handleSubmit(e: React.FormEvent) {
-		e.preventDefault();
-		setError(null);
-		setLoading(true);
+function handleSubmit(e: React.FormEvent) {
+	e.preventDefault();
+	setError(null);
+	setLoading(true);
 
-		const usersRaw = localStorage.getItem("habit-tracker-users");
-		const users = usersRaw ? JSON.parse(usersRaw) : [];
+	const result = logIn(email, password);
 
-		const match = users.find(
-			(u: { email: string; password: string }) =>
-				u.email === email && u.password === password,
-		);
-
-		if (!match) {
-			setError("Invalid email or password");
-			setLoading(false);
-			return;
-		}
-
-		const session = { userId: match.id, email: match.email };
-		localStorage.setItem("habit-tracker-session", JSON.stringify(session));
-
-		router.push("/dashboard");
+	if (!result.success) {
+		setError(result.error);
+		setLoading(false);
+		return;
 	}
+
+	router.push("/dashboard");
+}
 
 	return (
 		<div className="flex min-h-screen items-center justify-center bg-black px-4">
