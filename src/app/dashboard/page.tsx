@@ -91,7 +91,7 @@ function Dashboard({ session }: { session: Session }) {
 						type="button"
 						data-testid="auth-logout-button"
 						onClick={handleLogout}
-						className="rounded-md border border-white/10 px-4 py-2 text-sm text-white/60 transition hover:bg-white/5"
+						className="rounded-md border border-[#C2410C]/60 px-4 py-2 text-sm text-[#C2410C] transition hover:bg-[#FFF7ED] active:bg-[#FFF7ED]"
 					>
 						Log out
 					</button>
@@ -103,7 +103,7 @@ function Dashboard({ session }: { session: Session }) {
 						type="button"
 						data-testid="create-habit-button"
 						onClick={handleCreateClick}
-						className="mb-6 w-full rounded-xl border border-dashed border-white/20 py-4 text-sm text-white/50 transition hover:border-white/40 hover:text-white/70"
+						className="mb-6 w-full rounded-xl border border-dashed border-[#C2410C]/70 py-4 text-sm text-[#C2410C] transition hover:border-[#9A3412] hover:text-[#9A3412] active:border-[#9A3412] active:text-[#9A3412]"
 					>
 						+ New Habit
 					</button>

@@ -76,7 +76,7 @@ export default function HabitForm({
 						data-testid="habit-name-input"
 						value={name}
 						onChange={(e) => setName(e.target.value)}
-						className="w-full rounded-md border border-white/10 bg-white/5 px-4 py-2 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/20"
+						className="w-full rounded-md border border-white/10 bg-white/5 px-4 py-2 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#C2410C]"
 						placeholder="e.g. Drink Water"
 					/>
 					{nameError && (
@@ -97,7 +97,7 @@ export default function HabitForm({
 						data-testid="habit-description-input"
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
-						className="w-full rounded-md border border-white/10 bg-white/5 px-4 py-2 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/20"
+						className="w-full rounded-md border border-white/10 bg-white/5 px-4 py-2 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#C2410C]"
 						placeholder="Optional description"
 					/>
 				</div>
@@ -113,7 +113,7 @@ export default function HabitForm({
 						id="habit-frequency"
 						data-testid="habit-frequency-select"
 						defaultValue="daily"
-						className="w-full rounded-md border border-white/10 bg-black px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-white/20"
+						className="w-full rounded-md border border-white/10 bg-black px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#C2410C]"
 					>
 						<option value="daily">Daily</option>
 					</select>
@@ -124,14 +124,14 @@ export default function HabitForm({
 						type="button"
 						data-testid="habit-save-button"
 						onClick={handleSave}
-						className="flex-1 rounded-md bg-white py-2 font-semibold text-black transition hover:bg-white/90"
+						className="flex-1 rounded-md bg-[#C2410C] py-2 font-semibold text-white transition hover:bg-[#9A3412] active:bg-[#9A3412]"
 					>
 						{existingHabit ? "Update" : "Save"}
 					</button>
 					<button
 						type="button"
 						onClick={onCancel}
-						className="flex-1 rounded-md border border-white/10 py-2 text-white/70 transition hover:bg-white/5"
+						className="flex-1 rounded-md border border-[#C2410C]/60 py-2 text-[#C2410C] transition hover:bg-[#FFF7ED] active:bg-[#FFF7ED]"
 					>
 						Cancel
 					</button>

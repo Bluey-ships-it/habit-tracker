@@ -1,8 +1,6 @@
 "use client";
-import { getUsers, saveUsers, saveSession } from "@/src/lib/storage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { v4 as uuidv4 } from "uuid";
 import { signUp } from "@/src/lib/auth";
 export default function SignupForm() {
 	const router = useRouter();
@@ -10,10 +8,25 @@ export default function SignupForm() {
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
+	const [redirectNotice, setRedirectNotice] = useState(false);
+
+	useEffect(() => {
+		if (!loading) return;
+
+		const timeout = setTimeout(() => {
+			setLoading(false);
+			setError(
+				"Account created but redirect is taking longer than expected. Continue to dashboard manually.",
+			);
+		}, 3000);
+
+		return () => clearTimeout(timeout);
+	}, [loading]);
 
 	function handleSubmit(e: React.FormEvent) {
 		e.preventDefault();
 		setError(null);
+		setRedirectNotice(false);
 		setLoading(true);
 
 		const result = signUp(email, password);
@@ -24,7 +37,8 @@ export default function SignupForm() {
 			return;
 		}
 
-		router.push("/dashboard");
+		setRedirectNotice(true);
+		router.replace("/dashboard");
 	}
 	return (
 		<div className="flex min-h-screen items-center justify-center bg-black px-4">
@@ -34,6 +48,11 @@ export default function SignupForm() {
 				{error && (
 					<p className="mb-4 rounded-md bg-red-500/10 px-4 py-3 text-sm text-red-400">
 						{error}
+					</p>
+				)}
+				{redirectNotice && !error && (
+					<p className="mb-4 rounded-md bg-white/5 px-4 py-3 text-sm text-white/70">
+						Account created, redirecting...
 					</p>
 				)}
 
@@ -52,7 +71,7 @@ export default function SignupForm() {
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
-							className="w-full rounded-md border border-white/10 bg-white/5 px-4 py-2 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/20"
+							className="w-full rounded-md border border-white/10 bg-white/5 px-4 py-2 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#C2410C]"
 							placeholder="you@example.com"
 						/>
 					</div>
@@ -71,7 +90,7 @@ export default function SignupForm() {
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							required
-							className="w-full rounded-md border border-white/10 bg-white/5 px-4 py-2 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/20"
+							className="w-full rounded-md border border-white/10 bg-white/5 px-4 py-2 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#C2410C]"
 							placeholder="••••••••"
 						/>
 					</div>
@@ -80,7 +99,7 @@ export default function SignupForm() {
 						type="submit"
 						data-testid="auth-signup-submit"
 						disabled={loading}
-						className="w-full rounded-md bg-white py-2 font-semibold text-black transition hover:bg-white/90 disabled:opacity-50"
+						className="w-full rounded-md bg-[#C2410C] py-2 font-semibold text-white transition hover:bg-[#9A3412] active:bg-[#9A3412] disabled:opacity-50"
 					>
 						{loading ? "Creating account..." : "Sign up"}
 					</button>
@@ -88,7 +107,10 @@ export default function SignupForm() {
 
 				<p className="mt-6 text-center text-sm text-white/40">
 					Already have an account?{" "}
-					<a href="/login" className="text-white underline">
+					<a
+						href="/login"
+						className="text-[#C2410C] underline transition hover:text-[#9A3412] active:text-[#9A3412]"
+					>
 						Log in
 					</a>
 				</p>

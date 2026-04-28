@@ -49,7 +49,7 @@ export default function HabitCard({
 			data-testid={`habit-card-${slug}`}
 			className={`rounded-xl border p-5 transition ${
 				isCompletedToday
-					? "border-white/20 bg-white/10"
+					? "border-[#C2410C]/50 bg-[#FFF7ED]/10"
 					: "border-white/10 bg-white/5"
 			}`}
 		>
@@ -78,8 +78,8 @@ export default function HabitCard({
 					aria-label={isCompletedToday ? "Mark incomplete" : "Mark complete"}
 					className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 transition ${
 						isCompletedToday
-							? "border-white bg-white text-black"
-							: "border-white/30 bg-transparent text-transparent"
+							? "border-[#C2410C] bg-[#C2410C] text-white"
+							: "border-[#C2410C]/60 bg-transparent text-transparent"
 					}`}
 				>
 					✓
@@ -91,7 +91,7 @@ export default function HabitCard({
 					type="button"
 					data-testid={`habit-edit-${slug}`}
 					onClick={() => onEdit(habit)}
-					className="rounded-md border border-white/10 px-3 py-1 text-xs text-white/60 transition hover:bg-white/5"
+					className="rounded-md border border-[#C2410C]/60 px-3 py-1 text-xs text-[#C2410C] transition hover:bg-[#FFF7ED] active:bg-[#FFF7ED]"
 				>
 					Edit
 				</button>

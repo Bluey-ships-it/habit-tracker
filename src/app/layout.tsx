@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import ServiceWorkerRegister from "@/src/components/shared/ServiceWorkerRegister";
 
 export const metadata: Metadata = {
 	title: "Habit Tracker",
@@ -17,7 +18,10 @@ export default function RootLayout({
 				<link rel="manifest" href="/manifest.json" />
 				<meta name="theme-color" content="#000000" />
 			</head>
-			<body className="bg-black antialiased">{children}</body>
+			<body className="bg-black antialiased">
+				<ServiceWorkerRegister />
+				{children}
+			</body>
 		</html>
 	);
 }
