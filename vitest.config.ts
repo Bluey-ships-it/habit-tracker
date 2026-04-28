@@ -8,6 +8,8 @@ export default defineConfig({
 		environment: "jsdom",
 		globals: true,
 		setupFiles: ["./vitest.setup.ts"],
+		include: ["tests/unit/**/*.test.ts", "tests/integration/**/*.test.tsx"],
+		exclude: ["tests/e2e/**", "node_modules/**"],
 		coverage: {
 			provider: "v8",
 			include: ["src/lib/**"],
@@ -18,7 +20,8 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: {
-			"@": path.resolve(__dirname, "./src"),
+			"@/src": path.resolve(__dirname, "./src"),
+			"@": path.resolve(__dirname, "./"),
 		},
 	},
 });

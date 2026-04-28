@@ -1,6 +1,6 @@
-const CACHE_NAME = "habit-tracker-v1";
+const CACHE_NAME = "habit-tracker-v2";
 
-const APP_SHELL = ["/manifest.json"];
+const APP_SHELL = ["/", "/manifest.json"];
 
 self.addEventListener("install", (event) => {
 	event.waitUntil(
@@ -27,13 +27,15 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-
 	if (event.request.mode === "navigate") {
-		event.respondWith(fetch(event.request));
+		event.respondWith(
+			fetch(event.request).catch(async () => {
+				const cachedShell = await caches.match("/");
+				return cachedShell ?? new Response("Offline", { status: 503 });
+			}),
+		);
 		return;
 	}
-
-
 	event.respondWith(
 		caches.match(event.request).then((cached) => {
 			return (
